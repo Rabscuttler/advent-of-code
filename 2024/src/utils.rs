@@ -1,16 +1,14 @@
-use std::path::Path;
-use std::fs;
-use std::env;
 use reqwest;
+use std::env;
+use std::fs;
+use std::path::Path;
 
 pub fn get_session() -> Result<String, Box<dyn std::error::Error>> {
-    // First try environment variable
     if let Ok(session) = env::var("AOC_SESSION") {
         println!("Session found in environment variable");
         return Ok(session);
     }
 
-    // Then try reading from .env file
     let env_path = Path::new(".env");
     if env_path.exists() {
         let contents = fs::read_to_string(env_path)?;
@@ -24,34 +22,26 @@ pub fn get_session() -> Result<String, Box<dyn std::error::Error>> {
         }
     }
 
-    // If not found, prompt user and save it
     println!("Please enter your Advent of Code session cookie:");
     let mut session = String::new();
     std::io::stdin().read_line(&mut session)?;
     let session = session.trim().to_string();
-    
-    // Save to .env file
     fs::write(env_path, format!("AOC_SESSION={}", session))?;
-    
+
     Ok(session)
 }
 
-
 pub fn fetch_input(day: u32) -> Result<String, Box<dyn std::error::Error>> {
-    println!("Fetching input for day {}", day);    
-    
-    // Check if input file already exists
+    println!("Fetching input for day {}", day);
+
     let file_path = format!("data/d{}.txt", day);
     if Path::new(&file_path).exists() {
         println!("Input file for day {} already exists", day);
         return Ok(fs::read_to_string(file_path)?);
     }
-    
+
     let session = get_session()?;
-    let url = format!(
-        "https://adventofcode.com/2024/day/{}/input",
-        day
-    );
+    let url = format!("https://adventofcode.com/2024/day/{}/input", day);
     let client = reqwest::blocking::Client::new();
     let response = client
         .get(&url)
@@ -64,7 +54,8 @@ pub fn fetch_input(day: u32) -> Result<String, Box<dyn std::error::Error>> {
             "Failed to fetch input: HTTP {} {}",
             response.status().as_u16(),
             response.status().canonical_reason().unwrap_or("")
-        ).into());
+        )
+        .into());
     }
 
     let text = response
@@ -79,7 +70,6 @@ pub fn fetch_input(day: u32) -> Result<String, Box<dyn std::error::Error>> {
         .map_err(|e| format!("Failed to write input file: {}", e))?;
     Ok(text)
 }
-
 
 pub fn read_input(day: u32) -> String {
     fs::read_to_string(format!("data/d{}.txt", day))
