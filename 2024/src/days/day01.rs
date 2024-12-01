@@ -3,9 +3,8 @@ use crate::utils;
 pub fn solve() {
     let day = 1;
     let _ = utils::fetch_input(day);
-    let test_input = utils::read_test_input(day);
     let input = utils::read_input(day);
-    utils::print_results(day, &test_input, &input, part1, part2);
+    utils::print_results(day, &input, part1, part2);
 }
 
 fn part1(input: &str) -> u32 {
@@ -59,4 +58,21 @@ fn part2(input: &str) -> u32 {
         total += num1 * count as u32;
     }
     total
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_part1() {
+        let test_input = utils::read_test_input(1);
+        assert_eq!(part1(&test_input), 11);
+    }
+
+    #[test]
+    fn test_part2() {
+        let test_input = utils::read_test_input(1);
+        assert_eq!(part2(&test_input), 31);
+    }
 }
