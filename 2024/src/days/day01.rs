@@ -78,7 +78,13 @@ mod tests {
 }
 
 
-// Best solution on reddit:
+// Some nice reddit solutions: 
+
+// helpful python utils inspiration: https://github.com/mcpower/adventofcode/blob/15ae109bc882ca688665f86e4ca2ba1770495bb4/utils.py
+
+// ex 1: https://github.com/pkusensei/adventofcode2024/blob/6b9db1fb288619ae5f454cde9ad7918d39e7430e/d01/src/lib.rs
+
+// ex 2:
 
 // use counter::Counter;
 
