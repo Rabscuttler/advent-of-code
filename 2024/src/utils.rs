@@ -80,3 +80,21 @@ pub fn read_test_input(day: u32) -> String {
     fs::read_to_string(format!("data/d{}_test.txt", day))
         .expect("Should have been able to read the file")
 }
+
+pub fn print_results(
+    day: u32,
+    test_input: &str,
+    input: &str,
+    part1_fn: fn(&str) -> u32,
+    part2_fn: fn(&str) -> u32,
+) {
+    println!("\n\x1b[1;36m=== Day {} ===\x1b[0m", day);
+
+    println!("\x1b[1;33mPart 1\x1b[0m");
+    println!("  Test: \x1b[1;32m{}\x1b[0m", part1_fn(test_input));
+    println!("  Solution: \x1b[1;32m{}\x1b[0m", part1_fn(input));
+
+    println!("\x1b[1;33mPart 2\x1b[0m");
+    println!("  Test: \x1b[1;32m{}\x1b[0m", part2_fn(test_input));
+    println!("  Solution: \x1b[1;32m{}\x1b[0m", part2_fn(input));
+}
