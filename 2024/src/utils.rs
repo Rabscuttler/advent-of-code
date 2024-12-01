@@ -31,12 +31,10 @@ pub fn get_session() -> Result<String, Box<dyn std::error::Error>> {
     Ok(session)
 }
 
-pub fn fetch_input(day: u32) -> Result<String, Box<dyn std::error::Error>> {
-    println!("Fetching input for day {}", day);
+pub fn fetch_input(day: u32) -> Result<String, Box<dyn std::error::Error>> {    
 
     let file_path = format!("data/d{}.txt", day);
     if Path::new(&file_path).exists() {
-        println!("Input file for day {} already exists", day);
         return Ok(fs::read_to_string(file_path)?);
     }
 
@@ -68,33 +66,28 @@ pub fn fetch_input(day: u32) -> Result<String, Box<dyn std::error::Error>> {
 
     fs::write(format!("data/d{}.txt", day), &text)
         .map_err(|e| format!("Failed to write input file: {}", e))?;
+    println!("Day {} input saved in data/d{}.txt", day, day);
     Ok(text)
 }
 
 pub fn read_input(day: u32) -> String {
     fs::read_to_string(format!("data/d{}.txt", day))
-        .expect("Should have been able to read the file")
+        .expect("No data input file found")
 }
 
+#[cfg(test)]
 pub fn read_test_input(day: u32) -> String {
     fs::read_to_string(format!("data/d{}_test.txt", day))
-        .expect("Should have been able to read the file")
+        .expect("No test input file found")
 }
 
 pub fn print_results(
     day: u32,
-    test_input: &str,
     input: &str,
     part1_fn: fn(&str) -> u32,
     part2_fn: fn(&str) -> u32,
 ) {
     println!("\n\x1b[1;36m=== Day {} ===\x1b[0m", day);
-
-    println!("\x1b[1;33mPart 1\x1b[0m");
-    println!("  Test: \x1b[1;32m{}\x1b[0m", part1_fn(test_input));
-    println!("  Solution: \x1b[1;32m{}\x1b[0m", part1_fn(input));
-
-    println!("\x1b[1;33mPart 2\x1b[0m");
-    println!("  Test: \x1b[1;32m{}\x1b[0m", part2_fn(test_input));
-    println!("  Solution: \x1b[1;32m{}\x1b[0m", part2_fn(input));
+    println!("\x1b[1;33mPart 1:\x1b[0m {}", part1_fn(input));
+    println!("\x1b[1;33mPart 2:\x1b[0m {}", part2_fn(input));
 }
