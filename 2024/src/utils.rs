@@ -1,8 +1,10 @@
+#[cfg(test)]
 use reqwest;
 use std::env;
 use std::fs;
 use std::path::Path;
 
+#[cfg(test)]
 pub fn get_session() -> Result<String, Box<dyn std::error::Error>> {
     if let Ok(session) = env::var("AOC_SESSION") {
         println!("Session found in environment variable");
@@ -31,6 +33,7 @@ pub fn get_session() -> Result<String, Box<dyn std::error::Error>> {
     Ok(session)
 }
 
+#[cfg(test)]
 pub fn fetch_input(day: u32) -> Result<String, Box<dyn std::error::Error>> {    
 
     let file_path = format!("data/d{}.txt", day);
@@ -70,6 +73,7 @@ pub fn fetch_input(day: u32) -> Result<String, Box<dyn std::error::Error>> {
     Ok(text)
 }
 
+#[cfg(test)]
 pub fn read_input(day: u32) -> String {
     fs::read_to_string(format!("data/d{}.txt", day))
         .expect("No data input file found")
@@ -79,15 +83,4 @@ pub fn read_input(day: u32) -> String {
 pub fn read_test_input(day: u32) -> String {
     fs::read_to_string(format!("data/d{}_test.txt", day))
         .expect("No test input file found")
-}
-
-pub fn print_results(
-    day: u32,
-    input: &str,
-    part1_fn: fn(&str) -> u32,
-    part2_fn: fn(&str) -> u32,
-) {
-    println!("\n\x1b[1;36m=== Day {} ===\x1b[0m", day);
-    println!("\x1b[1;33mPart 1:\x1b[0m {}", part1_fn(input));
-    println!("\x1b[1;33mPart 2:\x1b[0m {}", part2_fn(input));
 }

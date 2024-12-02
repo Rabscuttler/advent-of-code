@@ -1,12 +1,7 @@
+#[cfg(test)]
 use crate::utils;
 
-pub fn solve() {
-    let day = 2;
-    let _ = utils::fetch_input(day);
-    let input = utils::read_input(day);
-    utils::print_results(day, &input, part1, part2);
-}
-
+#[cfg(test)]
 fn is_safe(v: &[i32]) -> bool {
     let mut prev = 0;
     let mut first = true;
@@ -34,7 +29,9 @@ fn is_safe(v: &[i32]) -> bool {
     safe
 }
 
+#[cfg(test)]
 fn part1(input: &str) -> u32 {
+    utils::fetch_input(2).unwrap();
     // get difference between each pair
     // for each difference if difference = 0 or abs(difference) > 3 then fail
     // if sign is different between any differences then fail
@@ -50,6 +47,7 @@ fn part1(input: &str) -> u32 {
     count
 }
 
+#[cfg(test)]
 fn part2(input: &str) -> u32 {
     let mut count = 0;
     for line in input.lines() {    
@@ -93,5 +91,6 @@ mod tests {
     #[test]
     fn test_part2() {
         assert_eq!(part2(&TEST_INPUT), 4);
+        assert_eq!(part2(&utils::read_input(2)), 577);
     }
 }
