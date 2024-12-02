@@ -1,13 +1,9 @@
+#[cfg(test)]
 use crate::utils;
 
-pub fn solve() {
-    let day = 1;
-    let _ = utils::fetch_input(day);
-    let input = utils::read_input(day);
-    utils::print_results(day, &input, part1, part2);
-}
-
+#[cfg(test)]
 fn part1(input: &str) -> u32 {
+    utils::fetch_input(1).unwrap();
     let mut list1 = Vec::new();
     let mut list2 = Vec::new();
 
@@ -38,6 +34,7 @@ fn part1(input: &str) -> u32 {
     total
 }
 
+#[cfg(test)]
 fn part2(input: &str) -> u32 {
     let mut list1 = Vec::new();
     let mut list2 = Vec::new();
@@ -67,13 +64,17 @@ mod tests {
     #[test]
     fn test_part1() {
         let test_input = utils::read_test_input(1);
+        let input = utils::read_input(1);
         assert_eq!(part1(&test_input), 11);
+        assert_eq!(part1(&input), 1765812);
     }
 
     #[test]
     fn test_part2() {
         let test_input = utils::read_test_input(1);
+        let input = utils::read_input(1);
         assert_eq!(part2(&test_input), 31);
+        assert_eq!(part2(&input), 20520794);
     }
 }
 
