@@ -37,9 +37,10 @@ fn part1(input: &str) -> u32 {
     // if sign is different between any differences then fail
     let mut count = 0;
     for line in input.lines() {
-        let v: Vec<i32> = line.split_whitespace()
-        .filter_map(|x| x.parse::<i32>().ok())
-        .collect();        
+        let v: Vec<i32> = line
+            .split_whitespace()
+            .filter_map(|x| x.parse::<i32>().ok())
+            .collect();
         if is_safe(&v) {
             count += 1;
         }
@@ -50,10 +51,11 @@ fn part1(input: &str) -> u32 {
 #[cfg(test)]
 fn part2(input: &str) -> u32 {
     let mut count = 0;
-    for line in input.lines() {    
-        let v: Vec<i32> = line.split_whitespace()
-        .filter_map(|x| x.parse::<i32>().ok())
-        .collect();    
+    for line in input.lines() {
+        let v: Vec<i32> = line
+            .split_whitespace()
+            .filter_map(|x| x.parse::<i32>().ok())
+            .collect();
         if is_safe(&v) {
             count += 1;
         } else {

@@ -1,10 +1,8 @@
-#[cfg(test)]
 use reqwest;
 use std::env;
 use std::fs;
 use std::path::Path;
 
-#[cfg(test)]
 pub fn get_session() -> Result<String, Box<dyn std::error::Error>> {
     if let Ok(session) = env::var("AOC_SESSION") {
         println!("Session found in environment variable");
@@ -33,9 +31,7 @@ pub fn get_session() -> Result<String, Box<dyn std::error::Error>> {
     Ok(session)
 }
 
-#[cfg(test)]
-pub fn fetch_input(day: u32) -> Result<String, Box<dyn std::error::Error>> {    
-
+pub fn fetch_input(day: u32) -> Result<String, Box<dyn std::error::Error>> {
     let file_path = format!("data/d{}.txt", day);
     if Path::new(&file_path).exists() {
         return Ok(fs::read_to_string(file_path)?);
@@ -75,12 +71,10 @@ pub fn fetch_input(day: u32) -> Result<String, Box<dyn std::error::Error>> {
 
 #[cfg(test)]
 pub fn read_input(day: u32) -> String {
-    fs::read_to_string(format!("data/d{}.txt", day))
-        .expect("No data input file found")
+    fs::read_to_string(format!("data/d{}.txt", day)).expect("No data input file found")
 }
 
 #[cfg(test)]
 pub fn read_test_input(day: u32) -> String {
-    fs::read_to_string(format!("data/d{}_test.txt", day))
-        .expect("No test input file found")
+    fs::read_to_string(format!("data/d{}_test.txt", day)).expect("No test input file found")
 }

@@ -3,7 +3,6 @@ use crate::utils;
 
 #[cfg(test)]
 fn part1(input: &str) -> u32 {
-    utils::fetch_input(1).unwrap();
     let mut list1 = Vec::new();
     let mut list2 = Vec::new();
 
@@ -78,8 +77,7 @@ mod tests {
     }
 }
 
-
-// Some nice reddit solutions: 
+// Some nice reddit solutions:
 
 // helpful python utils inspiration: https://github.com/mcpower/adventofcode/blob/15ae109bc882ca688665f86e4ca2ba1770495bb4/utils.py
 
@@ -98,7 +96,7 @@ mod tests {
 //                 .filter_map(|x| x.parse::<i32>().ok());
 //             Some((nums.next()?, nums.next()?))})
 //         .unzip();
-  
+
 // col1.sort();
 // col2.sort();
 
