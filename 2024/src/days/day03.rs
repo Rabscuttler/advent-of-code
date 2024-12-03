@@ -6,31 +6,28 @@ use regex::Regex;
 #[cfg(test)]
 fn part1(input: &str) -> u32 {
     let re = Regex::new(r"mul\((\d{1,3}),\s*(\d{1,3})\)").unwrap();
-    // Use captures to get the numbers from the capture groups
     re.captures_iter(input)
-        .map(|cap| {
-            // Extract numbers from capture groups 1 and 2
-            let x = cap[1].parse::<u32>().unwrap();
-            let y = cap[2].parse::<u32>().unwrap();
-            x * y
+        .filter_map(|cap| {
+            if let (Some(x), Some(y)) = (cap.get(1), cap.get(2)) {
+                Some(x.as_str().parse::<u32>().unwrap() * y.as_str().parse::<u32>().unwrap())
+            } else {
+                None
+            }
         })
         .sum()
 }
 
 #[cfg(test)]
 fn part2(input: &str) -> u32 {
-    let mul_re = Regex::new(r"mul\((\d{1,3}),\s*(\d{1,3})\)").unwrap();
-    let dont_do_re = Regex::new(r"don't\(\)[\s\S]*?do\(\)").unwrap();
+    let re = Regex::new(r"(?:don't\(\)[\s\S]*?do\(\))|mul\((\d{1,3}),\s*(\d{1,3})\)").unwrap();
 
-    let cleaned_input = dont_do_re.replace_all(input, "");
-    println!("cleaned_input: {}", cleaned_input);
-
-    mul_re
-        .captures_iter(&cleaned_input)
-        .map(|cap| {
-            let x = cap[1].parse::<u32>().unwrap();
-            let y = cap[2].parse::<u32>().unwrap();
-            x * y
+    re.captures_iter(input)
+        .filter_map(|cap| {
+            if let (Some(x), Some(y)) = (cap.get(1), cap.get(2)) {
+                Some(x.as_str().parse::<u32>().unwrap() * y.as_str().parse::<u32>().unwrap())
+            } else {
+                None
+            }
         })
         .sum()
 }
