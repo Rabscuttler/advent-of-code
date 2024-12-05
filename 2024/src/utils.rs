@@ -69,12 +69,12 @@ pub fn fetch_input(day: u32) -> Result<String, Box<dyn std::error::Error>> {
     Ok(text)
 }
 
-#[cfg(test)]
+// #[cfg(test)]
 pub fn read_input(day: u32) -> String {
     fs::read_to_string(format!("data/d{}.txt", day)).expect("No data input file found")
 }
 
-#[cfg(test)]
+// #[cfg(test)]
 pub fn read_test_input(day: u32) -> String {
     fs::read_to_string(format!("data/d{}_test.txt", day)).expect("No test input file found")
 }
