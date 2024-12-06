@@ -69,6 +69,7 @@ pub fn part1_3(input: &str) -> u32 {
     count
 }
 
+#[cfg(test)]
 pub fn part2(input: &str) -> u32 {
     let input: Vec<Vec<char>> = input.lines().map(|line| line.chars().collect()).collect();
     let height = input.len();

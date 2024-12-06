@@ -1,11 +1,10 @@
+#[cfg(test)]
 use crate::utils;
+#[cfg(test)]
 use std::collections::HashMap;
 
-pub fn solve(input: String) -> i32 {
-    // part1(&input);
-    part2(&input)
-}
 
+#[cfg(test)]
 fn part1(input: &String) -> i32 {
     let mut rules = Vec::new();
     let mut instructions = Vec::new();
@@ -81,6 +80,7 @@ fn part1(input: &String) -> i32 {
     total
 }
 
+#[cfg(test)]
 fn part2(input: &String) -> i32 {
     let mut rules = Vec::new();
     let mut instructions = Vec::new();
