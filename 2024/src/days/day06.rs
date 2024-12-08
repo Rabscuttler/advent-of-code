@@ -1,10 +1,6 @@
 use crate::utils;
 use std::collections::HashSet;
 
-pub fn solve() -> u32 {
-    part1(&utils::read_test_input(6))
-}
-
 fn part1(input: &String) -> u32 {
     // read the input and store it as a 2d array
     let input: Vec<Vec<char>> = input.lines().map(|line| line.chars().collect()).collect();
@@ -17,11 +13,10 @@ fn part1(input: &String) -> u32 {
     }
 
     // Find start position using iterator methods instead of nested loops
-    let start = padded_input.iter().enumerate()
-        .find_map(|(i, row)| {
-            row.iter().position(|&c| c == '^')
-                .map(|j| (i, j))
-        })
+    let start = padded_input
+        .iter()
+        .enumerate()
+        .find_map(|(i, row)| row.iter().position(|&c| c == '^').map(|j| (i, j)))
         .unwrap();
     padded_input[start.0][start.1] = '.';
 
@@ -31,27 +26,28 @@ fn part1(input: &String) -> u32 {
     let mut direction = directions[i];
 
     // Change the HashSet to only track positions, not directions
-    let mut visited_positions: HashSet<(usize, usize)> = HashSet::with_capacity(input.len() * input[0].len());
-    visited_positions.insert(position);  // Remove direction from insert
+    let mut visited_positions: HashSet<(usize, usize)> =
+        HashSet::with_capacity(input.len() * input[0].len());
+    visited_positions.insert(position); // Remove direction from insert
 
     loop {
         let new_char = check_new_position(&padded_input, position, direction);
         let new_position = (
             (position.0 as i32 + direction.0) as usize,
-            (position.1 as i32 + direction.1) as usize
+            (position.1 as i32 + direction.1) as usize,
         );
-        
+
         match new_char {
             '#' => {
                 i += 1;
                 direction = directions[i % 4];
-            },
+            }
             '.' => {
                 visited_positions.insert(new_position);
                 position = new_position;
-            },
+            }
             '0' => break,
-            _ => unreachable!()
+            _ => unreachable!(),
         }
     }
 
@@ -67,18 +63,18 @@ fn part2(input: &String) -> u32 {
         }
     }
 
-    let start = padded_input.iter().enumerate()
-        .find_map(|(i, row)| {
-            row.iter().position(|&c| c == '^')
-                .map(|j| (i, j))
-        })
+    let start = padded_input
+        .iter()
+        .enumerate()
+        .find_map(|(i, row)| row.iter().position(|&c| c == '^').map(|j| (i, j)))
         .unwrap();
     padded_input[start.0][start.1] = '.';
 
     let canonical_path = get_canonical_path(&padded_input, start);
-    
+
     // Use HashSet to ensure unique positions
-    let unique_loop_positions: HashSet<(usize, usize)> = canonical_path.iter()
+    let unique_loop_positions: HashSet<(usize, usize)> = canonical_path
+        .iter()
         .filter(|&&pos| pos != start)
         .filter(|&&pos| {
             let mut test_map = padded_input.clone();
@@ -108,20 +104,20 @@ fn get_canonical_path(map: &Vec<Vec<char>>, start: (usize, usize)) -> Vec<(usize
         let new_char = check_new_position(&map, position, direction);
         let new_position = (
             (position.0 as i32 + direction.0) as usize,
-            (position.1 as i32 + direction.1) as usize
+            (position.1 as i32 + direction.1) as usize,
         );
-        
+
         match new_char {
             '#' => {
                 i += 1;
                 direction = directions[i % 4];
-            },
+            }
             '.' => {
                 position = new_position;
                 path.push(position);
-            },
+            }
             '0' => break,
-            _ => unreachable!()
+            _ => unreachable!(),
         }
     }
     path
@@ -139,25 +135,32 @@ fn has_loop(map: &Vec<Vec<char>>, start: (usize, usize)) -> bool {
         let new_char = check_new_position(&map, position, direction);
         let new_position = (
             (position.0 as i32 + direction.0) as usize,
-            (position.1 as i32 + direction.1) as usize
+            (position.1 as i32 + direction.1) as usize,
         );
-        
+
         match new_char {
             '#' => {
                 i += 1;
                 direction = directions[i % 4];
-            },
+            }
             '.' => position = new_position,
             '0' => return false,
-            _ => unreachable!()
+            _ => unreachable!(),
         }
     }
     true
 }
 
 // Move check_new_position outside of the other functions
-fn check_new_position(padded_input: &Vec<Vec<char>>, position: (usize, usize), direction: (i32, i32)) -> char {
-    let p = (position.0 as i32 + direction.0, position.1 as i32 + direction.1);
+fn check_new_position(
+    padded_input: &Vec<Vec<char>>,
+    position: (usize, usize),
+    direction: (i32, i32),
+) -> char {
+    let p = (
+        position.0 as i32 + direction.0,
+        position.1 as i32 + direction.1,
+    );
     padded_input[p.0 as usize][p.1 as usize]
 }
 
@@ -172,7 +175,7 @@ mod tests {
     }
 
     #[test]
-    fn test_part2(){
+    fn test_part2() {
         assert_eq!(part2(&utils::read_test_input(6)), 6);
         // assert_eq!(part2(&utils::read_input(6)), 1911);
     }

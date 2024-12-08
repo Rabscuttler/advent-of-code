@@ -3,7 +3,6 @@ use crate::utils;
 #[cfg(test)]
 use std::collections::HashMap;
 
-
 #[cfg(test)]
 fn part1(input: &String) -> i32 {
     let mut rules = Vec::new();
@@ -26,18 +25,15 @@ fn part1(input: &String) -> i32 {
             }
         } else {
             // Parse instructions like "75,47,61,53,29" into Vec<i32>
-            let nums: Vec<i32> = line
-                .split(',')
-                .map(|n| n.parse::<i32>().unwrap())
-                .collect();
+            let nums: Vec<i32> = line.split(',').map(|n| n.parse::<i32>().unwrap()).collect();
             instructions.push(nums);
         }
-    }    
+    }
 
     // println!("Rules: {:?}", rules);
     // println!("Instructions: {:?}", instructions);
 
-    // go through the rules and make a lookup data structure for forwards rules. 
+    // go through the rules and make a lookup data structure for forwards rules.
     // the key is the number, the value is a vector of numbers that must come after it
     let mut forwards = HashMap::new();
     for (from, to) in rules {
@@ -100,13 +96,10 @@ fn part2(input: &String) -> i32 {
                 rules.push((from, to));
             }
         } else {
-            let nums: Vec<i32> = line
-                .split(',')
-                .map(|n| n.parse::<i32>().unwrap())
-                .collect();
+            let nums: Vec<i32> = line.split(',').map(|n| n.parse::<i32>().unwrap()).collect();
             instructions.push(nums);
         }
-    }    
+    }
     let mut forwards = HashMap::new();
     for (from, to) in rules {
         forwards.entry(from).or_insert_with(Vec::new).push(to);
@@ -137,18 +130,18 @@ fn part2(input: &String) -> i32 {
         if !valid {
             // Create a mutable copy of the instruction that we can reorder
             let mut reordered = instruction.clone();
-            
+
             // Keep trying to reorder until no more changes are needed
             let mut changes_made = true;
             while changes_made {
                 changes_made = false;
-                
+
                 // Check each pair of numbers
                 for i in 0..reordered.len() {
-                    for j in i+1..reordered.len() {
+                    for j in i + 1..reordered.len() {
                         let num1 = reordered[i];
                         let num2 = reordered[j];
-                        
+
                         // If num1 must come after num2, swap them
                         if let Some(must_follow) = forwards.get(&num1) {
                             if must_follow.contains(&num2) {
@@ -159,7 +152,7 @@ fn part2(input: &String) -> i32 {
                     }
                 }
             }
-            
+
             reordered.reverse();
             // println!("Reordered sequence: {:?}", reordered);
             let middle_idx = reordered.len() / 2;
@@ -170,7 +163,6 @@ fn part2(input: &String) -> i32 {
     total
 }
 
-
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -178,12 +170,12 @@ mod tests {
     #[test]
     fn test_part1() {
         assert_eq!(part1(&utils::read_test_input(5)), 143);
-        assert_eq!(part1(&utils::read_input(5)), 5091);        
+        assert_eq!(part1(&utils::read_input(5)), 5091);
     }
 
     #[test]
     fn test_part2() {
         assert_eq!(part2(&utils::read_test_input(5)), 123);
-        assert_eq!(part2(&utils::read_input(5)), 4681);        
+        assert_eq!(part2(&utils::read_input(5)), 4681);
     }
 }

@@ -1,11 +1,10 @@
-#[cfg(test)]
-use crate::utils;
+// #[cfg(test)]
+// use crate::utils;
 
 fn part1(input: &str) -> i64 {
-    
     fn find_combinations(total: i64, nums: Vec<i64>) -> i64 {
-        let operators = vec!['+', '*'];
-        
+        // let operators = vec!['+', '*'];
+
         fn evaluate(nums: &[i64], ops: &[char]) -> i64 {
             let mut result = nums[0];
             for (i, &op) in ops.iter().enumerate() {
@@ -20,13 +19,13 @@ fn part1(input: &str) -> i64 {
 
         let num_ops = nums.len() - 1;
         let total_combinations = 2_i64.pow(num_ops as u32); // 2^n combinations for n operators
-        
+
         // Try all possible combinations
         for i in 0..total_combinations {
             let current_ops: Vec<char> = (0..num_ops)
                 .map(|j| if (i & (1 << j)) == 0 { '+' } else { '*' })
                 .collect();
-                
+
             if evaluate(&nums, &current_ops) == total {
                 // Build expression string
                 let mut expr = format!("{}", nums[0]);
@@ -37,15 +36,17 @@ fn part1(input: &str) -> i64 {
                 return total;
             }
         }
-        
+
         0
     }
 
-    input.lines()
+    input
+        .lines()
         .map(|line| {
             let (total, nums) = line.split_once(':').unwrap();
             let total = total.parse::<i64>().unwrap();
-            let nums = nums.split_whitespace()
+            let nums = nums
+                .split_whitespace()
                 .map(|n| n.parse::<i64>().unwrap())
                 .collect::<Vec<i64>>();
             find_combinations(total, nums)
@@ -55,8 +56,8 @@ fn part1(input: &str) -> i64 {
 
 fn part2(input: &str) -> i64 {
     fn find_combinations(total: i64, nums: Vec<i64>) -> i64 {
-        let operators = vec!['+', '*', '|'];  // Added concatenation operator
-        
+        // let operators = vec!['+', '*', '|'];  // Added concatenation operator
+
         fn evaluate(nums: &[i64], ops: &[char]) -> i64 {
             let mut result = nums[0];
             for (i, &op) in ops.iter().enumerate() {
@@ -67,7 +68,7 @@ fn part2(input: &str) -> i64 {
                         // Convert both numbers to strings, concatenate, then parse back
                         let concat = format!("{}{}", result, nums[i + 1]);
                         result = concat.parse().unwrap();
-                    },
+                    }
                     _ => unreachable!(),
                 }
             }
@@ -76,7 +77,7 @@ fn part2(input: &str) -> i64 {
 
         let num_ops = nums.len() - 1;
         let total_combinations = 3_i64.pow(num_ops as u32); // Now 3^n combinations for n operators
-        
+
         // Try all possible combinations
         for i in 0..total_combinations {
             let current_ops: Vec<char> = (0..num_ops)
@@ -90,7 +91,7 @@ fn part2(input: &str) -> i64 {
                     }
                 })
                 .collect();
-                
+
             if evaluate(&nums, &current_ops) == total {
                 // Build expression string
                 let mut expr = format!("{}", nums[0]);
@@ -101,15 +102,17 @@ fn part2(input: &str) -> i64 {
                 return total;
             }
         }
-        
+
         0
     }
 
-    input.lines()
+    input
+        .lines()
         .map(|line| {
             let (total, nums) = line.split_once(':').unwrap();
             let total = total.parse::<i64>().unwrap();
-            let nums = nums.split_whitespace()
+            let nums = nums
+                .split_whitespace()
                 .map(|n| n.parse::<i64>().unwrap())
                 .collect::<Vec<i64>>();
             find_combinations(total, nums)
@@ -119,7 +122,7 @@ fn part2(input: &str) -> i64 {
 
 #[cfg(test)]
 mod tests {
-    use super::*;  // This brings part1 into scope
+    use super::*; // This brings part1 into scope
 
     const TEST_INPUT: &str = "190: 10 19
 3267: 81 40 27
