@@ -79,5 +79,6 @@ mod tests {
        // assert_eq!(part1(&utils::read_input(11)), 221291560078593); // 75 times
     }
 
-
+    // if things aren't fast enough, do the computation once and store the result
+    // good old hashmaps and BTreeMaps
 }
