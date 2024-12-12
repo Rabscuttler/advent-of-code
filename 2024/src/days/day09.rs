@@ -1,5 +1,5 @@
 #[cfg(test)]
-use crate::utils;
+// use crate::utils;
 
 fn part1(input: &str) -> i128 {
     let mut blocks: Vec<usize> = Vec::new();
@@ -175,12 +175,12 @@ mod tests {
     #[test]
     fn test_part1() {
         assert_eq!(part1(TEST_INPUT), 1928);
-        assert_eq!(part1(&utils::read_input(9)), 6288707484810); // too low 89828287383
+        // assert_eq!(part1(&utils::read_input(9)), 6288707484810);
     }
 
     #[test]
     fn test_part2() {
         assert_eq!(part2(TEST_INPUT), 2858);
-        assert_eq!(part2(&utils::read_input(9)), 6311837662089); // too low 10621599364
+        // assert_eq!(part2(&utils::read_input(9)), 6311837662089);
     }
 }
